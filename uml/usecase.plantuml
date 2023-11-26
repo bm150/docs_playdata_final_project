@@ -17,22 +17,34 @@ left to right direction
 (회원 개인 정보 보기) ..> (회원 기본 정보) : in
 (리뷰 작성자 정보 보기) ..> (회원 기본 정보) :in
 
-package RestAreaService {
+:휴게소 회원
+:
+
+package 개발자를 위한 휴게소 {
     usecase "회원가입" as Join
     usecase "로그인" as Login
-
-    package 메일서비스 {    
-        
+    usecase "인증" as Authentication
+    package 메일서비스 {
         usecase "메일 전송" as MailSend
         usecase "메일 목록 보기" as MailListView
     }
     package 클라우드서비스 {
+        usecase "메일 서비스 등록" as RegistMailAPI
         usecase "메일 전송 API" as MailSendAPI
-        usecase "메일 전송 목록 API" as MailSendHistoryAPI
-
+        usecase "메일 전송 목록 API" as MailSendHistoryAPI 
     }
+
 }
 
+package 이력서 서비스{
+    usecase "회원가입"
+}
+package 후원 서비스{
+    usecase "회원가입"
+}
+package 학습 서비스{
+    usecase "회원가입"
+}
 
 ' :회원: --> 메일발송
 
