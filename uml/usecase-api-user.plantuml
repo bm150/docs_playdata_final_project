@@ -1,0 +1,73 @@
+@startuml
+' Rest Area API User 유즈케이스 다이어그램
+' 작성자 : 장보명
+' 작성일 : 23.11.26
+' desc : 실제 Rest Area Core Site 와 각 서비스간의 관계만 개략적으로 표시
+/'
+    관계 표기
+    include = in
+    extends = ex
+
+'/
+top to bottom direction
+actor Rest사용자 as User #pink;line:red;line.bold;text:red
+
+
+
+' :휴게소 회원
+package 휴게소 {
+    '' usecase "로그인" as RestServiceLogin
+    usecase "회원가입" as RestServiceJoin
+    usecase "인증" as RestServiceAuthentication
+    package 메일서비스 {
+        usecase "메일 전송" as MailSend
+        usecase "메일 목록 보기" as MailListView
+        usecase "메일 조회" as MailSearch
+        usecase "메일 삭제" as MailDelete
+    }
+    package 클라우드서비스 {
+        usecase "서비스 가입" as CloudServiceJoin 
+        usecase "대시보드 확인" as DashBoardView
+        usecase "서비스 목록 확인" as CloudServiceListView
+        usecase "메일 서비스 등록" as RegistMailAPI
+        usecase "메일 전송 API" as MailSendAPI
+        usecase "메일 전송 목록 API" as MailSendHistoryAPI 
+    }
+}
+package 이력서서비스{
+    usecase "회원가입" as ResumeServiceJoin
+    usecase "인증" as ResumeServiceAuthentication
+    usecase "이력서 서비스" as ResumeService
+}
+package 후원서비스{
+    usecase "회원가입" as SupportServiceJoin
+    usecase "후원 서비스" as SupportService
+}
+package 학습서비스{
+    usecase "회원가입" as LearnServiceJoin
+    usecase "학습 서비스" as LearnService
+}
+
+:User: --- RestServiceJoin
+' :User: --- RestServiceLogin
+:User: --- MailListView
+:User: --- CloudServiceListView
+
+:MailSend: ..> MailListView : ex
+:MailSearch: ..> MailListView : ex
+:MailDelete: ..> MailListView : ex
+:MailListView: ..> RestServiceAuthentication : in
+
+
+:CloudServiceJoin: ..> RestServiceAuthentication : in
+:DashBoardView: ..> CloudServiceJoin : in
+
+:CloudServiceListView: ..> CloudServiceJoin : in
+:RegistMailAPI: ..> CloudServiceListView : ex
+
+
+:MailSendAPI: ..> RegistMailAPI : ex
+:MailSendHistoryAPI: ..> RegistMailAPI : ex
+
+
+@enduml
